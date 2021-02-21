@@ -23,6 +23,15 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-message: '<h1>It''s great having you contribute to this project</h1> Feel free to raise an <strong>Issue</strong>! Welcome to the community :nerd_face:'
           pr-message: '<h1>It''s great having you contribute to this project</h1> Feel free to create a <strong>Pull Request</strong>! Welcome to the community :nerd_face:'
+      - uses: nashmaniac/create-issue-action@v1.1
+        if: ${{ failure() }} # only run when this job is failed.
+        name: Create Issue Action
+        with:
+          title: Welcome message failed
+          token: ${{secrets.GITHUB_TOKEN}}
+          assignees: ${{github.actor}}
+          labels: bug
+          body: Welcome message failed on commit ${{github.sha}}
 
   statistics:
     runs-on: ubuntu-latest
